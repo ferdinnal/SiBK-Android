@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0563ae</color>
+    <color name="colorPrimaryDark">#065798</color>
+    <color name="colorPrimaryDarkNew">#115F9E</color>
+    <color name="colorAccent">#ffae7f</color>
+    <color name="colorText">#504F60</color>
+    <color name="abu_muda">#E8E8E8</color>
+    <color name="merah">#e74c3c</color>
+    <color name="merah_tua1">#BB2716</color>
+    <color name="hitam">#000000</color>
+    <color name="putih">#ffffff</color>
+    <color name="biru">#0084FF</color>
+    <color name="green">#1aff00</color>
+    <color name="red">#ff0000</color>
+    <color name="secondaryTextColor">#666666</color>
+    <color name="yellow">#fff200</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="abu_abu">#7f8c8d</color>
+
+    <array name="tab_colors">
+        <item name="tab_1">#ffffff</item>
+        <item name="tab_2">#ffffff</item>
+        <item name="tab_3">#ffffff</item>
+        <item name="tab_4">#ffffff</item>
+    </array>
+    <color name="color_notification_back">#ff9d00</color>
+    <color name="color_notification_text">#3E4757</color>
+</resources>

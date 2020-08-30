@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SiBK</string>
+    <string name="menu_1">Beranda</string>
+    <string name="menu_2">Notifikasi</string>
+    <string name="menu_3">Lainnya</string>
+    <string name="update">Perbaharui Aplikasi</string>
+</resources>
