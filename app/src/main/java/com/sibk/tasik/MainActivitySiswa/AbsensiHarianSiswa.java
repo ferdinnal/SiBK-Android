@@ -111,8 +111,8 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
         namaMataPelajaran = i.getStringExtra("namaMataPelajaran");
         idKelas = i.getIntExtra("idKelas", 0);
         historyQrCodeId = i.getIntExtra("historyQrCodeId", 0);
-        Log.d("testKElasNa", historyQrCodeId + "");
-        Log.d("testKElasNa", userid + "");
+        Log.d("testKElasNa2", historyQrCodeId + "");
+        Log.d("testKElasNa2", idKelas + "");
 
         mLastLocation = getLastKnownLocation();
         if (mLastLocation != null) {
@@ -270,7 +270,7 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
                             SiswaAbsensiModel x = new SiswaAbsensiModel();
                             x.setIdSiswa(c.getInt("id_siswa"));
                             x.setAbsensiId(c.getInt("absensi_id"));
-                            x.setNamaSiswa(c.getString("nama_pengguna"));
+                            x.setNamaSiswa(c.getString("fullname"));
                             x.setNisn(c.getString("nisn"));
                             x.setStatusAbsenId(c.getInt("status_absen_id"));
                             x.setStatusAbsen(c.getString("status_absen"));

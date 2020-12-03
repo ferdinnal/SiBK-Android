@@ -8,6 +8,8 @@ import androidx.multidex.MultiDex;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.core.ImageTranscoderType;
+import com.facebook.imagepipeline.core.MemoryChunkType;
 
 import okhttp3.OkHttpClient;
 
@@ -32,10 +34,14 @@ public class MyApplication extends Application {
                 Thread.getDefaultUncaughtExceptionHandler()));
         mInstance = this;
         appContext = getApplicationContext();
-        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
-                .newBuilder(appContext, okHttpClient)
-                .build();
-        Fresco.initialize(appContext, config);
+        Fresco.initialize(
+                appContext,
+                ImagePipelineConfig.newBuilder(appContext)
+                        .setMemoryChunkType(MemoryChunkType.BUFFER_MEMORY)
+                        .setImageTranscoderType(ImageTranscoderType.JAVA_TRANSCODER)
+                        .experiment().setNativeCodeDisabled(true)
+                        .build());
+        this.setAppContext(getApplicationContext());
 //        Fresco.initialize(this);
 
     }

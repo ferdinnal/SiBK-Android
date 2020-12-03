@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sibk.tasik.DB.DBUser;
 import com.sibk.tasik.MainActivitySiswa.Absensi;
+import com.sibk.tasik.MainActivitySiswa.AbsensiJadwal;
 import com.sibk.tasik.MainActivitySiswa.Bimbingan;
 import com.sibk.tasik.MainActivitySiswa.Jadwal;
 import com.sibk.tasik.MainActivitySiswa.Konseling;
@@ -80,7 +81,7 @@ public class DashboardAdapterSiswa extends RecyclerView.Adapter<DashboardAdapter
             @Override
             public void onClick(View view) {
                 if (idds == 1) {
-                    Intent i = new Intent(activity, Absensi.class);
+                    Intent i = new Intent(activity, AbsensiJadwal.class);
                     activity.startActivity(i);
                 } else if (idds == 2) {
                     Intent i = new Intent(activity, Jadwal.class);

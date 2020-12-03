@@ -14,9 +14,9 @@ public class Website {
     public Website()
     {
 
-        this.domain="http://192.168.1.23/sibkapi/api";
-        this.new_domain="http://192.168.1.23/sibkapi/api";
-        this.main_domain="http://192.168.1.23/sibkapi";
+        this.domain="http://192.168.43.194/sibkapi/api";
+        this.new_domain="http://192.168.43.194/sibkapi/api";
+        this.main_domain="http://192.168.43.194/sibkapi";
     }
 
     public String getDomain()

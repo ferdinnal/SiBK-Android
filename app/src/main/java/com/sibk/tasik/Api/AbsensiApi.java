@@ -9,6 +9,7 @@ public class AbsensiApi {
     public static String POST_FIND_ABSENSI= web.getNewDomain() + "/Absensi/find_absensi_siswa?hash=" + web.getHash();
     public static String POST_UPDATE_GURU= web.getNewDomain() + "/Absensi/update_by_guru?hash=" + web.getHash();
     public static String POST_PROSES_ABSENSI= web.getNewDomain() + "/Absensi/absensi_siswa?hash=" + web.getHash();
+    public static String POST_FIND_PELAJARAN_SISWA = web.getNewDomain() + "/Absensi/findBySiswaNewJadwal?hash=" + web.getHash();
 
 }
 
