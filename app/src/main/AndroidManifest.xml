@@ -80,6 +80,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name=".MainActivitySiswa.TambahPengajuan"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
             android:name=".MainActivitySiswa.AbsensiHarianSiswa"
             android:screenOrientation="portrait" />
     </application>
