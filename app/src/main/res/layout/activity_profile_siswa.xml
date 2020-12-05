@@ -11,753 +11,458 @@
     android:focusableInTouchMode="true"
     tools:openDrawer="start">
 
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/slidingUp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="55dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_web_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="Detail Profile"
+                        android:textColor="@color/putih"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/include"
         android:background="@android:color/transparent"
-        android:gravity="bottom">
+        app:srlAccentColor="@color/putih"
+        app:srlPrimaryColor="@color/colorPrimaryDark">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:fillViewport="true">
 
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:elevation="0dp">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/colorPrimaryDark"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="55dp"
-                            android:gravity="center">
-
-                            <TextView
-                                android:id="@+id/tv_web_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/montserrat_bold"
-                                android:text="Detail Profile"
-                                android:textColor="@color/putih"
-                                android:textSize="15sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                </androidx.appcompat.widget.Toolbar>
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <com.scwang.smartrefresh.layout.SmartRefreshLayout
-                android:id="@+id/refreshLayout"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                app:srlAccentColor="@color/putih"
-                app:srlPrimaryColor="@color/colorPrimaryDark">
+                android:background="@color/putih"
+                android:orientation="vertical">
 
-                <ScrollView
+                <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/spinKit"
+                    style="@style/SpinKitView.Large"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    app:SpinKit_Color="@color/colorPrimaryDark"
+                    app:SpinKit_Style="Wave" />
+
+                <LinearLayout
+                    android:id="@+id/llTop"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinKit"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/putih">
-
-                        <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/spinKit"
-                            style="@style/SpinKitView.Large"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="15dp"
-                            app:SpinKit_Color="@color/colorPrimaryDark"
-                            app:SpinKit_Style="Wave" />
+                        android:layout_height="wrap_content"
+                        android:background="@color/abu_muda">
 
                         <LinearLayout
-                            android:id="@+id/llTop"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/spinKit"
-                            android:gravity="center_vertical"
+                            android:layout_marginBottom="15dp"
+                            android:background="@drawable/curve_background"
+                            android:orientation="vertical"
+                            android:padding="7dp">
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/iv_profile"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                app:placeholderImage="@drawable/no_data_bg_abu_muda"
+                                app:roundAsCircle="true"
+                                app:roundingBorderColor="@color/putih"
+                                app:roundingBorderWidth="1px" />
+
+                            <TextView
+                                android:id="@+id/tv_fullname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="7dp"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:gravity="center"
+                                android:text="Siswa"
+                                android:textColor="@color/putih"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvKelas"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginBottom="15dp"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:gravity="center"
+                                android:text="X TKJ"
+                                android:textColor="@color/putih"
+                                android:textSize="18dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/abu_muda">
+                                android:orientation="horizontal"
+                                android:padding="7dp">
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="15dp"
-                                    android:background="@drawable/curve_background"
-                                    android:orientation="vertical"
-                                    android:padding="7dp">
-
-                                    <com.facebook.drawee.view.SimpleDraweeView
-                                        android:id="@+id/iv_profile"
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
-                                        android:layout_gravity="center"
-                                        android:scaleType="fitXY"
-                                        app:placeholderImage="@drawable/no_data_bg_abu_muda"
-                                        app:roundAsCircle="true"
-                                        app:roundingBorderColor="@color/putih"
-                                        app:roundingBorderWidth="1px" />
-
-                                    <TextView
-                                        android:id="@+id/tv_fullname"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_marginTop="7dp"
-                                        android:fontFamily="@font/montserrat_semibold"
-                                        android:gravity="center"
-                                        android:text="Siswa"
-                                        android:textColor="@color/putih"
-                                        android:textSize="18dp" />
-
-                                    <TextView
-                                        android:id="@+id/tvKelas"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_marginTop="7dp"
-                                        android:layout_marginBottom="15dp"
-                                        android:fontFamily="@font/montserrat_semibold"
-                                        android:gravity="center"
-                                        android:text="X TKJ"
-                                        android:textColor="@color/putih"
-                                        android:textSize="18dp" />
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:padding="7dp">
-
-                                        <ImageView
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_at"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                        <TextView
-                                            android:id="@+id/tvEmail"
-                                            android:layout_width="0px"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="0.9"
-                                            android:fontFamily="@font/montserrat_semibold"
-                                            android:padding="10dp"
-                                            android:text="darkdreez@gmail.com"
-                                            android:textColor="@color/colorPrimaryDark"
-                                            android:textSize="16dp" />
-
-                                        <ImageView
-                                            android:id="@+id/ivEditEmail"
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_edit_white_18"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
-                                        android:orientation="horizontal"
-                                        android:padding="7dp">
-
-                                        <ImageView
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_phone_call"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                        <TextView
-                                            android:id="@+id/tvPhone"
-                                            android:layout_width="0px"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="0.9"
-                                            android:fontFamily="@font/montserrat_semibold"
-                                            android:padding="10dp"
-                                            android:text="C1683207031"
-                                            android:textColor="@color/colorPrimaryDark"
-                                            android:textSize="16dp" />
-
-                                        <ImageView
-                                            android:id="@+id/ivEditPhone"
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_edit_white_18"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
-                                        android:orientation="horizontal"
-                                        android:padding="7dp">
-
-                                        <ImageView
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_phone_call"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                        <TextView
-                                            android:id="@+id/tvPhoneOrtu"
-                                            android:layout_width="0px"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="0.9"
-                                            android:fontFamily="@font/montserrat_semibold"
-                                            android:padding="10dp"
-                                            android:text="C1683207031"
-                                            android:textColor="@color/colorPrimaryDark"
-                                            android:textSize="16dp" />
-
-                                        <ImageView
-                                            android:id="@+id/ivEditPhoneOrtu"
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_edit_white_18"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                    </LinearLayout>
-
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
-                                        android:orientation="horizontal"
-                                        android:padding="7dp">
-
-                                        <ImageView
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_id_card"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                        <TextView
-                                            android:id="@+id/tvNisn"
-                                            android:layout_width="0px"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="0.9"
-                                            android:fontFamily="@font/montserrat_semibold"
-                                            android:padding="10dp"
-                                            android:text="C1683207031"
-                                            android:textColor="@color/colorPrimaryDark"
-                                            android:textSize="16dp" />
-
-                                        <ImageView
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:visibility="invisible" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
-                                        android:orientation="horizontal"
-                                        android:padding="7dp">
-
-                                        <ImageView
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_address"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                        <TextView
-                                            android:id="@+id/tvAddress"
-                                            android:layout_width="0px"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="0.9"
-                                            android:fontFamily="@font/montserrat_semibold"
-                                            android:padding="10dp"
-                                            android:text="Jln Jiwa Besar"
-                                            android:textColor="@color/colorPrimaryDark"
-                                            android:textSize="16dp" />
-
-                                        <ImageView
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:visibility="invisible" />
-
-                                    </LinearLayout>
-
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="1dp"
-                                        android:layout_marginTop="7dp"
-                                        android:layout_marginBottom="7dp"
-                                        android:background="@color/colorPrimaryDark" />
-
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:padding="7dp">
-
-                                        <ImageView
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_padlock"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                        <TextView
-                                            android:layout_width="0px"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="0.9"
-                                            android:fontFamily="@font/montserrat_semibold"
-                                            android:padding="10dp"
-                                            android:text="Edit Password"
-                                            android:textColor="@color/colorPrimaryDark"
-                                            android:textSize="16dp" />
-
-                                        <ImageView
-                                            android:id="@+id/ivEditPassword"
-                                            android:layout_width="0px"
-                                            android:layout_height="24dp"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="0.1"
-                                            android:src="@drawable/ic_edit_white_18"
-                                            android:tint="@color/colorPrimaryDark" />
-
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-                </ScrollView>
-
-            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/putih">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_semibold"
-                    android:text="Judul"
-                    android:textColor="@color/colorText"
-                    android:textSize="16dp" />
-
-                <LinearLayout
-                    android:id="@+id/input_data"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:id="@+id/llPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_below="@+id/llNisn"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="7dp"
-                        android:background="@drawable/ic_bg_edit_text_colorprimarydark"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="7dp">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="7dp"
-                            android:layout_marginRight="7dp"
-                            android:gravity="center"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false">
-
-                            <EditText
-                                android:id="@+id/et_fullname"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:background="@android:color/transparent"
-                                android:focusable="true"
-                                android:fontFamily="@font/montserrat_semibold"
-                                android:inputType="text"
-                                android:paddingLeft="7dp"
-                                android:textColor="@color/putih"
-                                android:textSize="16dp" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/tv_username"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/putih"
-                        android:visibility="invisible" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/input_data2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:id="@+id/llNoHp"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_below="@+id/llNisn"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="7dp"
-                        android:background="@drawable/ic_bg_edit_text_colorprimarydark"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="7dp">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="7dp"
-                            android:layout_marginRight="7dp"
-                            android:gravity="center"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_at"
+                                    android:tint="@color/colorPrimaryDark" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/tvEmail"
+                                    android:layout_width="0px"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:text="+62  "
-                                    android:textColor="@color/putih"
-                                    android:textSize="16dp"
-                                    android:textStyle="bold" />
-
-                                <EditText
-                                    android:id="@+id/et_no_hp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:background="@android:color/transparent"
-                                    android:digits="0123456789"
+                                    android:layout_weight="0.9"
                                     android:fontFamily="@font/montserrat_semibold"
-                                    android:inputType="number"
-                                    android:maxLength="12"
-                                    android:textColor="@color/putih"
+                                    android:padding="10dp"
+                                    android:text="-"
+                                    android:textColor="@color/colorPrimaryDark"
                                     android:textSize="16dp" />
+
+                                <ImageView
+                                    android:id="@+id/ivEditEmail"
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_edit_white_18"
+                                    android:tint="@color/colorPrimaryDark" />
+
                             </LinearLayout>
 
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/tv_nohp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/putih"
-                        android:visibility="invisible" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/input_data3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:id="@+id/llPassword2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/llNisn"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="7dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="7dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_semibold"
-                                android:text="Masukkan Password Lama"
-                                android:textColor="@color/hitam" />
-
-                            <com.google.android.material.textfield.TextInputLayout
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="7dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="7dp"
-                                android:background="@drawable/ic_bg_edit_text_colorprimarydark"
-                                android:gravity="center"
-                                app:hintAnimationEnabled="false"
-                                app:hintEnabled="false"
-                                app:passwordToggleEnabled="true"
-                                app:passwordToggleTint="@color/putih">
-
-                                <EditText
-                                    android:id="@+id/etPasswordLama"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="12dp"
-                                    android:layout_marginRight="12dp"
-                                    android:background="@android:color/transparent"
-                                    android:fontFamily="@font/montserrat_semibold"
-                                    android:hint="********"
-                                    android:inputType="textPassword"
-                                    android:singleLine="true"
-                                    android:textColor="@color/putih"
-                                    android:textColorHint="@color/putih"
-                                    android:textSize="16dp" />
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_semibold"
-                                android:text="Masukkan Password Baru"
-                                android:textColor="@color/hitam" />
+                                android:layout_marginTop="7dp"
+                                android:orientation="horizontal"
+                                android:padding="7dp">
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="7dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="7dp"
-                                android:background="@drawable/ic_bg_edit_text_colorprimarydark"
-                                android:gravity="center"
-                                app:hintAnimationEnabled="false"
-                                app:hintEnabled="false"
-                                app:passwordToggleEnabled="true"
-                                app:passwordToggleTint="@color/putih">
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_phone_call"
+                                    android:tint="@color/colorPrimaryDark" />
 
-                                <EditText
-                                    android:id="@+id/etPasswordBaru"
-                                    android:layout_width="fill_parent"
+                                <TextView
+                                    android:id="@+id/tvPhone"
+                                    android:layout_width="0px"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="12dp"
-                                    android:layout_marginRight="12dp"
-                                    android:background="@android:color/transparent"
+                                    android:layout_weight="0.9"
                                     android:fontFamily="@font/montserrat_semibold"
-                                    android:hint="********"
-                                    android:inputType="textPassword"
-                                    android:singleLine="true"
-                                    android:textColor="@color/putih"
-                                    android:textColorHint="@color/putih"
+                                    android:padding="10dp"
+                                    android:text="-"
+                                    android:textColor="@color/colorPrimaryDark"
                                     android:textSize="16dp" />
-                            </com.google.android.material.textfield.TextInputLayout>
 
-                        </LinearLayout>
+                                <ImageView
+                                    android:id="@+id/ivEditPhone"
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_edit_white_18"
+                                    android:tint="@color/colorPrimaryDark" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="vertical">
+                            </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_semibold"
-                                android:text="Masukkan Ulangi Password Baru"
-                                android:textColor="@color/hitam" />
+                                android:layout_marginTop="7dp"
+                                android:orientation="horizontal"
+                                android:padding="7dp">
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="7dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="7dp"
-                                android:background="@drawable/ic_bg_edit_text_colorprimarydark"
-                                android:gravity="center"
-                                app:hintAnimationEnabled="false"
-                                app:hintEnabled="false"
-                                app:passwordToggleEnabled="true"
-                                app:passwordToggleTint="@color/putih">
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_phone_call"
+                                    android:tint="@color/colorPrimaryDark" />
 
-                                <EditText
-                                    android:id="@+id/etpasswordBaruUlangi"
-                                    android:layout_width="fill_parent"
+                                <TextView
+                                    android:id="@+id/tvPhoneOrtu"
+                                    android:layout_width="0px"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="12dp"
-                                    android:layout_marginRight="12dp"
-                                    android:background="@android:color/transparent"
+                                    android:layout_weight="0.9"
                                     android:fontFamily="@font/montserrat_semibold"
-                                    android:hint="********"
-                                    android:inputType="textPassword"
-                                    android:singleLine="true"
-                                    android:textColor="@color/putih"
-                                    android:textColorHint="@color/putih"
+                                    android:padding="10dp"
+                                    android:text="-"
+                                    android:textColor="@color/colorPrimaryDark"
                                     android:textSize="16dp" />
-                            </com.google.android.material.textfield.TextInputLayout>
+
+                                <ImageView
+                                    android:id="@+id/ivEditPhoneOrtu"
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_edit_white_18"
+                                    android:tint="@color/colorPrimaryDark" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:orientation="horizontal"
+                                android:padding="7dp">
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_id_card"
+                                    android:tint="@color/colorPrimaryDark" />
+
+                                <TextView
+                                    android:id="@+id/tvNisn"
+                                    android:layout_width="0px"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.9"
+                                    android:fontFamily="@font/montserrat_semibold"
+                                    android:padding="10dp"
+                                    android:text="-"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="16dp" />
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:visibility="invisible" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:orientation="horizontal"
+                                android:padding="7dp">
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_address"
+                                    android:tint="@color/colorPrimaryDark" />
+
+                                <TextView
+                                    android:id="@+id/tvAddress"
+                                    android:layout_width="0px"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.9"
+                                    android:fontFamily="@font/montserrat_semibold"
+                                    android:padding="10dp"
+                                    android:text="-"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="16dp" />
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:visibility="invisible" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:orientation="horizontal"
+                                android:padding="7dp">
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_warning_new"
+                                    android:tint="@color/colorPrimaryDark" />
+
+                                <TextView
+                                    android:id="@+id/tvPoint"
+                                    android:layout_width="0px"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.9"
+                                    android:fontFamily="@font/montserrat_semibold"
+                                    android:padding="10dp"
+                                    android:text="-"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="16dp" />
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:visibility="invisible" />
+
+                            </LinearLayout>
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginBottom="7dp"
+                                android:background="@color/colorPrimaryDark" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="7dp">
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_padlock"
+                                    android:tint="@color/colorPrimaryDark" />
+
+                                <TextView
+                                    android:layout_width="0px"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.9"
+                                    android:fontFamily="@font/montserrat_semibold"
+                                    android:padding="10dp"
+                                    android:text="Edit Password"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="16dp" />
+
+                                <ImageView
+                                    android:id="@+id/ivEditPassword"
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_edit_white_18"
+                                    android:tint="@color/colorPrimaryDark" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llHistoryPelanggaran"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="7dp">
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_baseline_history_24"
+                                    android:tint="@color/colorPrimaryDark" />
+
+                                <TextView
+                                    android:layout_width="0px"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.9"
+                                    android:fontFamily="@font/montserrat_semibold"
+                                    android:padding="10dp"
+                                    android:text="Riwayat Pelanggaran"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="16dp" />
+
+                                <ImageView
+                                    android:layout_width="0px"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.1"
+                                    android:src="@drawable/ic_baseline_chevron_right_24"
+                                    android:tint="@color/colorPrimaryDark" />
+
+                            </LinearLayout>
+
 
                         </LinearLayout>
 
+                    </androidx.cardview.widget.CardView>
 
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/tv_error_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/putih"
-                        android:visibility="invisible" />
                 </LinearLayout>
 
+            </RelativeLayout>
+        </ScrollView>
 
-                <LinearLayout
-                    android:id="@+id/llButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="7dp"
-                    android:gravity="right"
-                    android:orientation="horizontal">
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-                    <Button
-                        android:id="@+id/alert_button_no"
-                        android:layout_width="70dp"
-                        android:layout_height="35dp"
-                        android:background="@drawable/btn_cancle_gradient"
-                        android:padding="7dp"
-                        android:text="Batal"
-                        android:textAllCaps="false"
-                        android:textColor="@color/putih" />
 
-                    <Button
-                        android:id="@+id/alert_button_yes"
-                        android:layout_width="70dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/btn_primary_gradient"
-                        android:padding="7dp"
-                        android:text="Simpan"
-                        android:textAllCaps="false"
-                        android:textColor="@color/putih" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
-
-    z
 </RelativeLayout>

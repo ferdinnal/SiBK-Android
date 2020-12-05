@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,6 +31,8 @@ import com.androidnetworking.interfaces.OkHttpResponseAndJSONObjectRequestListen
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.appbar.AppBarLayout;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -40,9 +43,9 @@ import com.sibk.tasik.Api.UserApi;
 import com.sibk.tasik.DB.DBUser;
 import com.sibk.tasik.Model.User;
 import com.sibk.tasik.R;
+import com.sibk.tasik.StartActivity.LoginActivity;
 import com.sibk.tasik.Utility.ScreenSize;
 import com.sibk.tasik.Utility.Website;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,7 +88,6 @@ public class Profiles extends AppCompatActivity {
     private String gambarProfil;
     private String jenisKelamin;
     private String noHandphone;
-    private SlidingUpPanelLayout slidingUp;
     private TextView tvTitle;
     private LinearLayout inputData;
     private EditText etFullname;
@@ -112,7 +114,11 @@ public class Profiles extends AppCompatActivity {
     private LinearLayout llButton;
     private String noOrtu;
     private TextView tvPhoneOrtu;
+    private TextView tvPoint;
     private ImageView ivEditPhoneOrtu;
+    private LinearLayout llHistoryPelanggaran;
+    private DialogPlus dialogPlus;
+    private TextView tvKelas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +132,15 @@ public class Profiles extends AppCompatActivity {
 
         website = new Website();
         ss = new ScreenSize(Profiles.this);
+
+        dialogPlus = DialogPlus.newDialog(Profiles.this)
+                .setContentHolder(new ViewHolder(R.layout.dialog_edit))
+                .setGravity(Gravity.BOTTOM)
+                .setInAnimation(R.anim.abc_fade_in)
+                .setOutAnimation(R.anim.abc_fade_out)
+                .setExpanded(false)
+                .setCancelable(true)
+                .create();
 
         setLayout();
         getDataPengguna();
@@ -151,38 +166,34 @@ public class Profiles extends AppCompatActivity {
         ivEditPassword = (ImageView) findViewById(R.id.ivEditPassword);
         kelompok = findViewById(R.id.kelompok);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
-        slidingUp = (SlidingUpPanelLayout) findViewById(R.id.slidingUp);
-//        slidingUp.setPanelHeight(ss.getHeight() / 3);
-        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        inputData = (LinearLayout) findViewById(R.id.input_data);
-        etFullname = (EditText) findViewById(R.id.et_fullname);
-        tvUsername = (TextView) findViewById(R.id.tv_username);
-//        inputCode = (LinearLayout) findViewById(R.id.input_code);
-//        etOldPass = (EditText) findViewById(R.id.et_old_pass);
-//        etNewPass = (EditText) findViewById(R.id.et_new_pass);
-//        etRenewPass = (EditText) findViewById(R.id.et_renew_pass);
-        alertButtonNo = (Button) findViewById(R.id.alert_button_no);
-        alertButtonYes = (Button) findViewById(R.id.alert_button_yes);
-        llPassword = (LinearLayout) findViewById(R.id.llPassword);
-        inputData2 = (LinearLayout) findViewById(R.id.input_data2);
-        llNoHp = (LinearLayout) findViewById(R.id.llNoHp);
-        etNoHp = (EditText) findViewById(R.id.et_no_hp);
-        tvNohp = (TextView) findViewById(R.id.tv_nohp);
-        inputData3 = (LinearLayout) findViewById(R.id.input_data3);
-        llPassword2 = (LinearLayout) findViewById(R.id.llPassword2);
-        llButton = (LinearLayout) findViewById(R.id.llButton);
+        tvPoint = (TextView) findViewById(R.id.tvPoint);
+        tvKelas = (TextView) findViewById(R.id.tvKelas);
+        llHistoryPelanggaran = (LinearLayout) findViewById(R.id.llHistoryPelanggaran);
         ivEditPhoneOrtu = (ImageView) findViewById(R.id.ivEditPhoneOrtu);
 
-        etPasswordLama = (EditText) findViewById(R.id.etPasswordLama);
-        etPasswordBaru = (EditText) findViewById(R.id.etPasswordBaru);
-        etpasswordBaruUlangi = (EditText) findViewById(R.id.etpasswordBaruUlangi);
-        tvErrorPassword = (TextView) findViewById(R.id.tv_error_password);
+        alertButtonNo = (Button) dialogPlus.findViewById(R.id.alert_button_no);
+        alertButtonYes = (Button) dialogPlus.findViewById(R.id.alert_button_yes);
+        llPassword = (LinearLayout) dialogPlus.findViewById(R.id.llPassword);
+        inputData2 = (LinearLayout) dialogPlus.findViewById(R.id.input_data2);
+        llNoHp = (LinearLayout) dialogPlus.findViewById(R.id.llNoHp);
+        etNoHp = (EditText) dialogPlus.findViewById(R.id.et_no_hp);
+        tvNohp = (TextView) dialogPlus.findViewById(R.id.tv_nohp);
+        inputData3 = (LinearLayout) dialogPlus.findViewById(R.id.input_data3);
+        llPassword2 = (LinearLayout) dialogPlus.findViewById(R.id.llPassword2);
+        llButton = (LinearLayout) dialogPlus.findViewById(R.id.llButton);
+        etFullname = (EditText) dialogPlus.findViewById(R.id.et_fullname);
+        tvUsername = (TextView) dialogPlus.findViewById(R.id.tv_username);
+
+        etPasswordLama = (EditText) dialogPlus.findViewById(R.id.etPasswordLama);
+        etPasswordBaru = (EditText) dialogPlus.findViewById(R.id.etPasswordBaru);
+        etpasswordBaruUlangi = (EditText) dialogPlus.findViewById(R.id.etpasswordBaruUlangi);
+        tvErrorPassword = (TextView) dialogPlus.findViewById(R.id.tv_error_password);
+        tvTitle = (TextView) dialogPlus.findViewById(R.id.tv_title);
+        inputData = (LinearLayout) dialogPlus.findViewById(R.id.input_data);
+
     }
 
     public void setClick() {
-
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,11 +201,19 @@ public class Profiles extends AppCompatActivity {
             }
         });
 
-
         refreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 return new BezierCircleHeader(context);
+            }
+        });
+
+
+        llHistoryPelanggaran.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Profiles.this, RiwayatPelanggaranSiswa.class);
+                startActivity(i);
             }
         });
 
@@ -209,254 +228,249 @@ public class Profiles extends AppCompatActivity {
         ivEditEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingPanelUp(1);
+                dialogPlus(1);
             }
         });
 
         ivEditPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingPanelUp(2);
+                dialogPlus(2);
             }
         });
         ivEditPhoneOrtu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingPanelUp(4);
+                dialogPlus(4);
             }
         });
 
         ivEditPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingPanelUp(3);
+                dialogPlus(3);
             }
         });
-
     }
 
-    void slidingPanelUp(final int type) {
-//        slidingUp.setPanelHeight(ss.getHeight() / 3);
-        if (slidingUp.getPanelState() == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-            slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            if (type == 1) {
-                inputData.setVisibility(View.VISIBLE);
-                llButton.setVisibility(View.VISIBLE);
-                inputData3.setVisibility(View.GONE);
-                inputData2.setVisibility(View.GONE);
-                tvTitle.setText("Masukan Alamat Email Baru Anda");
-                tvUsername.setVisibility(View.INVISIBLE);
-                etFullname.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                etFullname.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    void dialogPlus(final int type) {
+
+        if (type == 1) {
+            inputData.setVisibility(View.VISIBLE);
+            llButton.setVisibility(View.VISIBLE);
+            inputData3.setVisibility(View.GONE);
+            inputData2.setVisibility(View.GONE);
+            tvTitle.setText("Masukan Alamat Email Baru Anda");
+            tvUsername.setVisibility(View.INVISIBLE);
+            etFullname.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+            etFullname.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (!isValidEmail(etFullname.getText().toString())) {
+                        tvUsername.setVisibility(View.VISIBLE);
+                        tvUsername.setTextColor(getResources().getColor(R.color.merah));
+                        tvUsername.setText("Alamat email tidak tersedia");
+                        isInputError = true;
+                    } else {
+                        tvUsername.setVisibility(View.INVISIBLE);
+                        isInputError = false;
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            alertButtonYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isInputError) {
+                        updateUserEmail(etFullname.getText().toString().trim());
+                        dialogPlus.dismiss();
+
+                    } else {
 
                     }
+                }
+            });
+            alertButtonNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogPlus.dismiss();
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (!isValidEmail(etFullname.getText().toString())) {
-                            tvUsername.setVisibility(View.VISIBLE);
-                            tvUsername.setTextColor(getResources().getColor(R.color.merah));
-                            tvUsername.setText("Alamat email tidak tersedia");
-                            isInputError = true;
+                }
+            });
+        } else if (type == 2) {
+            inputData.setVisibility(View.GONE);
+            inputData2.setVisibility(View.VISIBLE);
+            llButton.setVisibility(View.VISIBLE);
+            inputData3.setVisibility(View.GONE);
+            tvTitle.setText("Masukan No. Hp Baru Anda");
+            tvNohp.setVisibility(View.INVISIBLE);
+            etNoHp.setInputType(InputType.TYPE_CLASS_NUMBER);
+            etNoHp.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (etNoHp.length() > 12) {
+                        tvNohp.setVisibility(View.VISIBLE);
+                        tvNohp.setTextColor(getResources().getColor(R.color.merah));
+                        tvNohp.setText("Inputan Maksimal 12");
+                        isInputError = true;
+                    } else {
+                        tvNohp.setVisibility(View.INVISIBLE);
+                        isInputError = false;
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            alertButtonYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isInputError) {
+                        String no_telephone = etNoHp.getText().toString();
+                        updateUserNoHp(no_telephone.replace("0", "+62") + "");
+                        dialogPlus.dismiss();
+
+                    } else {
+
+                    }
+                }
+            });
+            alertButtonNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogPlus.dismiss();
+
+                }
+            });
+        } else if (type == 3) {
+            inputData3.setVisibility(View.VISIBLE);
+            llButton.setVisibility(View.VISIBLE);
+            inputData2.setVisibility(View.GONE);
+            inputData.setVisibility(View.GONE);
+            tvTitle.setText("Edit Password");
+            tvErrorPassword.setVisibility(View.INVISIBLE);
+            etPasswordBaru.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            etPasswordLama.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            etpasswordBaruUlangi.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            etPasswordBaru.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (etNoHp.length() < 0) {
+                        tvErrorPassword.setVisibility(View.VISIBLE);
+                        tvErrorPassword.setTextColor(getResources().getColor(R.color.merah));
+                        tvErrorPassword.setText("Inputan Tidak Boleh Kosong");
+                        isInputError = true;
+                    } else {
+                        tvErrorPassword.setVisibility(View.INVISIBLE);
+                        isInputError = false;
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            alertButtonYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (etPasswordLama.getText().length() < 0 || etPasswordBaru.getText().length() < 0 || etpasswordBaruUlangi.getText().length() < 0) {
+                        tvErrorPassword.setVisibility(View.VISIBLE);
+                        tvErrorPassword.setTextColor(getResources().getColor(R.color.merah));
+                        tvErrorPassword.setText("Inputan Tidak Boleh Kosong");
+                    } else {
+                        if (etPasswordBaru.getText().toString().equalsIgnoreCase(etpasswordBaruUlangi.getText().toString())) {
+                            updateUserPassword(etPasswordBaru.getText().toString().trim());
+                            dialogPlus.dismiss();
+
                         } else {
-                            tvUsername.setVisibility(View.INVISIBLE);
-                            isInputError = false;
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-                alertButtonYes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isInputError) {
-                            updateUserEmail(etFullname.getText().toString().trim());
-                            slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                            slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-                        } else {
-
-                        }
-                    }
-                });
-                alertButtonNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-                    }
-                });
-            } else if (type == 2) {
-                inputData.setVisibility(View.GONE);
-                inputData2.setVisibility(View.VISIBLE);
-                llButton.setVisibility(View.VISIBLE);
-                inputData3.setVisibility(View.GONE);
-                tvTitle.setText("Masukan No. Hp Baru Anda");
-                tvNohp.setVisibility(View.INVISIBLE);
-                etNoHp.setInputType(InputType.TYPE_CLASS_NUMBER);
-                etNoHp.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (etNoHp.length() > 12) {
-                            tvNohp.setVisibility(View.VISIBLE);
-                            tvNohp.setTextColor(getResources().getColor(R.color.merah));
-                            tvNohp.setText("Inputan Maksimal 12");
-                            isInputError = true;
-                        } else {
-                            tvNohp.setVisibility(View.INVISIBLE);
-                            isInputError = false;
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-                alertButtonYes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isInputError) {
-                            String no_telephone = etNoHp.getText().toString();
-                            updateUserNoHp(no_telephone.replace("0", "+62") + "");
-                            slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                            slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-                        } else {
-
-                        }
-                    }
-                });
-                alertButtonNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-                    }
-                });
-            } else if (type == 3) {
-                inputData3.setVisibility(View.VISIBLE);
-                llButton.setVisibility(View.VISIBLE);
-                inputData2.setVisibility(View.GONE);
-                inputData.setVisibility(View.GONE);
-                tvTitle.setText("Edit Password");
-                tvErrorPassword.setVisibility(View.INVISIBLE);
-                etPasswordBaru.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                etPasswordLama.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                etpasswordBaruUlangi.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                etPasswordBaru.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (etNoHp.length() < 0) {
                             tvErrorPassword.setVisibility(View.VISIBLE);
                             tvErrorPassword.setTextColor(getResources().getColor(R.color.merah));
-                            tvErrorPassword.setText("Inputan Tidak Boleh Kosong");
-                            isInputError = true;
-                        } else {
-                            tvErrorPassword.setVisibility(View.INVISIBLE);
-                            isInputError = false;
+                            tvErrorPassword.setText("Konfirmasi Password Tidak Cocok.");
                         }
                     }
+                }
+            });
+            alertButtonNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogPlus.dismiss();
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+                }
+            });
+        } else if (type == 4) {
+            inputData.setVisibility(View.GONE);
+            inputData2.setVisibility(View.VISIBLE);
+            llButton.setVisibility(View.VISIBLE);
+            inputData3.setVisibility(View.GONE);
+            tvTitle.setText("Masukan No. Hp Baru Ortu Anda");
+            tvNohp.setVisibility(View.INVISIBLE);
+            etNoHp.setInputType(InputType.TYPE_CLASS_NUMBER);
+            etNoHp.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
-                });
-                alertButtonYes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (etPasswordLama.getText().length() < 0 || etPasswordBaru.getText().length() < 0 || etpasswordBaruUlangi.getText().length() < 0) {
-                            tvErrorPassword.setVisibility(View.VISIBLE);
-                            tvErrorPassword.setTextColor(getResources().getColor(R.color.merah));
-                            tvErrorPassword.setText("Inputan Tidak Boleh Kosong");
-                        } else {
-                            if (etPasswordBaru.getText().toString().equalsIgnoreCase(etpasswordBaruUlangi.getText().toString())) {
-//                                updateUserPassword(etPasswordBaru.getText().toString().trim());
-                                slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                                slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-                            } else {
-                                tvErrorPassword.setVisibility(View.VISIBLE);
-                                tvErrorPassword.setTextColor(getResources().getColor(R.color.merah));
-                                tvErrorPassword.setText("Konfirmasi Password Tidak Cocok.");
-                            }
-                        }
-                    }
-                });
-                alertButtonNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-                    }
-                });
-            } else if (type == 4) {
-                inputData.setVisibility(View.GONE);
-                inputData2.setVisibility(View.VISIBLE);
-                llButton.setVisibility(View.VISIBLE);
-                inputData3.setVisibility(View.GONE);
-                tvTitle.setText("Masukan No. Hp Baru Ortu Anda");
-                tvNohp.setVisibility(View.INVISIBLE);
-                etNoHp.setInputType(InputType.TYPE_CLASS_NUMBER);
-                etNoHp.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (etNoHp.length() > 12) {
+                        tvNohp.setVisibility(View.VISIBLE);
+                        tvNohp.setTextColor(getResources().getColor(R.color.merah));
+                        tvNohp.setText("Inputan Maksimal 12");
+                        isInputError = true;
+                    } else {
+                        tvNohp.setVisibility(View.INVISIBLE);
+                        isInputError = false;
                     }
+                }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (etNoHp.length() > 12) {
-                            tvNohp.setVisibility(View.VISIBLE);
-                            tvNohp.setTextColor(getResources().getColor(R.color.merah));
-                            tvNohp.setText("Inputan Maksimal 12");
-                            isInputError = true;
-                        } else {
-                            tvNohp.setVisibility(View.INVISIBLE);
-                            isInputError = false;
-                        }
-                    }
+                @Override
+                public void afterTextChanged(Editable s) {
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+                }
+            });
+            alertButtonYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isInputError) {
+                        String no_telephone = etNoHp.getText().toString();
+                        updateUserNoHpOrtu(no_telephone.replace("0", "+62") + "");
+                        dialogPlus.dismiss();
+                    } else {
 
                     }
-                });
-                alertButtonYes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isInputError) {
-                            String no_telephone = etNoHp.getText().toString();
-                            updateUserNoHpOrtu(no_telephone.replace("0", "+62") + "");
-                            slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                            slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-                        } else {
-
-                        }
-                    }
-                });
-                alertButtonNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-                    }
-                });
-            }
+                }
+            });
+            alertButtonNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogPlus.dismiss();
+                }
+            });
         }
+        dialogPlus.show();
     }
 
     public final static boolean isValidEmail(CharSequence target) {
@@ -496,6 +510,7 @@ public class Profiles extends AppCompatActivity {
                     if (status.equalsIgnoreCase("success")) {
                         JSONObject dataUser = result.getJSONObject("data_user");
                         JSONObject dataSiswa = result.getJSONObject("data_siswa");
+                        JSONObject totalPp = result.getJSONObject("total_pp");
                         namaPengguna = dataUser.getString("fullname");
                         nisn = dataSiswa.getString("nisn");
                         gambarProfil = dataUser.getString("gambar_profil");
@@ -512,6 +527,8 @@ public class Profiles extends AppCompatActivity {
 
                         Uri lin1 = Uri.parse(website.getMainDomain() + "/image/" + gambarProfil);
                         ivProfile.setImageURI(lin1);
+                        tvPoint.setText(totalPp.getString("total_pp"));
+                        tvKelas.setText(dataSiswa.getString("nama_kelas"));
                     } else {
                         alert(status, message);
                     }
@@ -555,7 +572,7 @@ public class Profiles extends AppCompatActivity {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                     sweetAlertDialog.dismissWithAnimation();
-//                    doLogout();
+                    doLogout();
                 }
             });
             pDialog.setCancelText("Tidak");
@@ -582,66 +599,16 @@ public class Profiles extends AppCompatActivity {
 
     }
 
-//    private void doLogout() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(Profiles.this, SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#3D3489"));
-//        pDialog.setTitleText("Sedang Mengupdate Data....");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
-//
-//        DBUser dbUser = new DBUser(Profiles.this);
-//        User userModel = dbUser.findUser();
-//        int idPengguna = userModel.getusertypeid();
-//
-//        AndroidNetworking.post(UserApi.POST_LOGOUT)
-//                .addBodyParameter("id_pengguna", idPengguna + "")
-//                .setTag(this)
-//                .setPriority(Priority.MEDIUM)
-//                .build()
-//                .setAnalyticsListener(new AnalyticsListener() {
-//                    @Override
-//                    public void onReceived(long timeTakenInMillis, long bytesSent, long bytesReceived, boolean isFromCache) {
-//
-//                    }
-//                }).getAsOkHttpResponseAndJSONObject(new OkHttpResponseAndJSONObjectRequestListener() {
-//            @Override
-//            public void onResponse(Response okHttpResponse, JSONObject response) {
-//                try {
-//                    pDialog.dismissWithAnimation();
-//                    JSONObject result = response.getJSONObject("sibk");
-//                    String status = result.getString("status");
-//                    String message = result.getString("message");
-//
-//                    if (status.equalsIgnoreCase("success")) {
-//                        DBUser db_user = new DBUser(DetailSiswa.this);
-//                        db_user.delete();
-//                        Intent i = new Intent(DetailSiswa.this, LoginActivity.class);
-//                        startActivity(i);
-//                        finish();
-//                    } else {
-//                        alert(status, message);
-//                    }
-//
-//                } catch (JSONException e) {
-//                    pDialog.dismissWithAnimation();
-//                    e.printStackTrace();
-//                    alert("Gagal menampilkan data!", "Error");
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(ANError anError) {
-//                pDialog.dismissWithAnimation();
-//                alert("Tidak Ada Koneksi!", "Error");
-//            }
-//        });
-//    }
+    private void doLogout() {
+        DBUser db_user = new DBUser(Profiles.this);
+        db_user.delete();
+        Intent i = new Intent(Profiles.this, LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
 
 
     private void updateUserEmail(final String alamatEmail) {
-        slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
         final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#3D3489"));
         pDialog.setTitleText("Sedang Menyimpan Data....");
@@ -692,8 +659,6 @@ public class Profiles extends AppCompatActivity {
     }
 
     private void updateUserNoHpOrtu(final String noHp) {
-        slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
         final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#3D3489"));
         pDialog.setTitleText("Sedang Menyimpan Data....");
@@ -744,8 +709,6 @@ public class Profiles extends AppCompatActivity {
     }
 
     private void updateUserNoHp(final String noHp) {
-        slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
         final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#3D3489"));
         pDialog.setTitleText("Sedang Menyimpan Data....");
@@ -795,55 +758,53 @@ public class Profiles extends AppCompatActivity {
         });
     }
 
-//    private void updateUserPassword(final String password) {
-//        slidingUp.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-//        slidingUp.setPanelHeight(-200);//agar slide tidak muncul ketika checkout
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#3D3489"));
-//        pDialog.setTitleText("Sedang Menyimpan Data....");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
-//        AndroidNetworking.post(UserApi.POST_UPDATE_PASSWORD)
-//                .addBodyParameter("id_pengguna", String.valueOf(idPengguna))
-//                .addBodyParameter("password", String.valueOf(password))
-//                .setTag(this)
-//                .setPriority(Priority.LOW)
-//                .build()
-//                .setAnalyticsListener(new AnalyticsListener() {
-//                    @Override
-//                    public void onReceived(long timeTakenInMillis, long bytesSent, long bytesReceived, boolean isFromCache) {
-//
-//                    }
-//                }).getAsOkHttpResponseAndJSONObject(new OkHttpResponseAndJSONObjectRequestListener() {
-//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//            @Override
-//            public void onResponse(Response okHttpResponse, JSONObject response) {
-//                try {
-////                    TransitionManager.beginDelayedTransition(kelompok);
-//                    pDialog.dismissWithAnimation();
-//                    JSONObject result = response.getJSONObject("sibk");
-//                    String status = result.getString("status");
-//                    String message = result.getString("message");
-//                    if (status.equalsIgnoreCase("success")) {
-//                        alert("succes", "Berhasil Menyimpan Data, anda akan otomatis logout aplikasi");
-//                        doLogout();
-//                    } else {
-//                        alert(status, message);
-//                    }
-//
-//                } catch (JSONException e) {
-//                    pDialog.dismissWithAnimation();
-//                    e.printStackTrace();
-//                    alert("Gagal menambahkan data!", "Error");
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(ANError anError) {
-//
-//                alert(anError.toString(), "Error");
-//            }
-//        });
-//    }
+    private void updateUserPassword(final String password) {
+        final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#3D3489"));
+        pDialog.setTitleText("Sedang Menyimpan Data....");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        AndroidNetworking.post(UserApi.POST_UPDATE_PASSWORD)
+                .addBodyParameter("id_pengguna", String.valueOf(idPengguna))
+                .addBodyParameter("password", String.valueOf(password))
+                .setTag(this)
+                .setPriority(Priority.LOW)
+                .build()
+                .setAnalyticsListener(new AnalyticsListener() {
+                    @Override
+                    public void onReceived(long timeTakenInMillis, long bytesSent, long bytesReceived, boolean isFromCache) {
+
+                    }
+                }).getAsOkHttpResponseAndJSONObject(new OkHttpResponseAndJSONObjectRequestListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(Response okHttpResponse, JSONObject response) {
+                try {
+//                    TransitionManager.beginDelayedTransition(kelompok);
+                    pDialog.dismissWithAnimation();
+                    JSONObject result = response.getJSONObject("sibk");
+                    String status = result.getString("status");
+                    String message = result.getString("message");
+                    if (status.equalsIgnoreCase("success")) {
+                        alert("succes", "Berhasil Menyimpan Data, anda akan otomatis logout aplikasi");
+                        doLogout();
+                    } else {
+                        alert(status, message);
+                    }
+
+                } catch (JSONException e) {
+                    pDialog.dismissWithAnimation();
+                    e.printStackTrace();
+                    alert("Gagal menambahkan data!", "Error");
+                }
+
+            }
+
+            @Override
+            public void onError(ANError anError) {
+
+                alert(anError.toString(), "Error");
+            }
+        });
+    }
 }

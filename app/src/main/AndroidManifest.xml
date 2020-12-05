@@ -72,6 +72,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".MainActivitySiswa.AbsensiJadwal"
             android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivitySiswa.RiwayatPelanggaranSiswa"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".MainActivitySiswa.ScanQr"
