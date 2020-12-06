@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class AbsensiHariAdapter extends BaseAdapter {
+public class AbsensiHariNewAdapter extends BaseAdapter {
 
     private Activity act;
     private LayoutInflater inflater;
@@ -37,7 +37,7 @@ public class AbsensiHariAdapter extends BaseAdapter {
     private boolean is_development_mode;
     private DialogPlus dialogPlus;
 
-    public AbsensiHariAdapter(final Activity act, List<HariAbsensiModel> listBank) {
+    public AbsensiHariNewAdapter(final Activity act, List<HariAbsensiModel> listBank) {
         this.act = act;
         this.listBank = listBank;
 
@@ -124,7 +124,7 @@ public class AbsensiHariAdapter extends BaseAdapter {
         cvAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(act, AbsensiHarianSiswa.class);
+                Intent i = new Intent(act, AbsensiHarianGuru.class);
                 i.putExtra("idJadwalPelajaran", tp.getIdJadwalPelajaran());
                 i.putExtra("kodeMataPelajaran", tp.getKodeMataPelajaran());
                 i.putExtra("namaMataPelajaran", tp.getNamaMataPelajaran());

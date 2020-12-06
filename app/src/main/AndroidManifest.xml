@@ -87,6 +87,17 @@
         <activity
             android:name=".MainActivitySiswa.AbsensiHarianSiswa"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivityGuru.AbsensiJadwalGuru"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivityGuru.AbsensiGuru"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivityGuru.AbsensiHarianGuru"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 </manifest>

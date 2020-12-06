@@ -4,4 +4,6 @@
     <string name="menu_2">Notifikasi</string>
     <string name="menu_3">Lainnya</string>
     <string name="update">Perbaharui Aplikasi</string>
+    <string name="petunjuk_barcode">Arahkan barcode ini ke Kamera Smartphone Peserta Didik.</string>
+
 </resources>

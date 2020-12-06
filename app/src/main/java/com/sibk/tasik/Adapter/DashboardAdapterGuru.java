@@ -11,7 +11,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sibk.tasik.DB.DBUser;
-import com.sibk.tasik.MainActivityGuru.Absensi;
+import com.sibk.tasik.MainActivityGuru.AbsensiGuru;
+import com.sibk.tasik.MainActivityGuru.AbsensiJadwalGuru;
 import com.sibk.tasik.MainActivityGuru.Jadwal;
 import com.sibk.tasik.MainActivityGuru.MainActivity;
 import com.sibk.tasik.MainActivityGuru.Profiles;
@@ -73,7 +74,7 @@ public class DashboardAdapterGuru extends RecyclerView.Adapter<DashboardAdapterG
             @Override
             public void onClick(View view) {
                 if (idds == 1) {
-                    Intent i = new Intent(activity, Absensi.class);
+                    Intent i = new Intent(activity, AbsensiJadwalGuru.class);
                     activity.startActivity(i);
                 } else if (idds == 2) {
                     Intent i = new Intent(activity, Jadwal.class);

@@ -1,15 +1,14 @@
-package com.sibk.tasik.MainActivitySiswa;
+package com.sibk.tasik.MainActivityGuru;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationManager;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.androidnetworking.AndroidNetworking;
@@ -29,9 +27,13 @@ import com.androidnetworking.interfaces.OkHttpResponseAndJSONObjectRequestListen
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -39,6 +41,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sibk.tasik.Adapter.AbsensiSiswaAdapter;
+import com.sibk.tasik.Adapter.AbsensiSiswaNewAdapter;
 import com.sibk.tasik.Api.AbsensiApi;
 import com.sibk.tasik.DB.DBUser;
 import com.sibk.tasik.Model.SiswaAbsensiModel;
@@ -56,9 +59,9 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.Response;
 
-public class AbsensiHarianSiswa extends AppCompatActivity {
+public class AbsensiHarianGuru extends AppCompatActivity {
     private User userModel;
-    private int userid, usertypeid;
+    private int idPengguna, idTipePengguna;
     public static int idKelas;
     private int idJadwalPelajaran;
     private String namaGuru;
@@ -72,7 +75,7 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
     private ImageView ivSearch;
     private SmartRefreshLayout refreshLayout;
     public static SpinKitView spinKit;
-    private LinearLayout cvAll;
+    public static LinearLayout cvAll;
     private CardView cvAtas;
     private LinearLayout llTop;
     private TextView tvPelajaran;
@@ -87,77 +90,42 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
     private String qrCodeAbsensi = "";
     private DialogPlus dialogPlus;
     private ImageView ivBarcode;
-    private List<SiswaAbsensiModel> listHari = new ArrayList<SiswaAbsensiModel>();
-    public static AbsensiSiswaAdapter adapterHari;
+    public static List<SiswaAbsensiModel> listHari = new ArrayList<SiswaAbsensiModel>();
+    public static AbsensiSiswaNewAdapter adapterHari;
     public static int historyQrCodeId;
     public static TextView tvBelumAbsen;
-    private Location mLastLocation;
-    private static double latitude = 0, longitude = 0;
+    private int hari;
+    private int hari_now;
+    public static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_absensi_siswa);
+        setContentView(R.layout.activity_absensi_guru);
 
-        DBUser dbUser = new DBUser(AbsensiHarianSiswa.this);
+        DBUser dbUser = new DBUser(AbsensiHarianGuru.this);
         userModel = dbUser.findUser();
-        userid = userModel.getuserid();
-        usertypeid = userModel.getusertypeid();
-        ss = new ScreenSize(AbsensiHarianSiswa.this);
+        idPengguna = userModel.getuserid();
+        idTipePengguna = userModel.getusertypeid();
+        ss = new ScreenSize(AbsensiHarianGuru.this);
+        activity=AbsensiHarianGuru.this;
 
         Intent i = this.getIntent();
         idJadwalPelajaran = i.getIntExtra("idJadwalPelajaran", 0);
         kodeMataPelajaran = i.getStringExtra("kodeMataPelajaran");
         namaMataPelajaran = i.getStringExtra("namaMataPelajaran");
         idKelas = i.getIntExtra("idKelas", 0);
-        historyQrCodeId = i.getIntExtra("historyQrCodeId", 0);
-        Log.d("testKElasNa2", historyQrCodeId + "");
-        Log.d("testKElasNa2", idKelas + "");
-
-        mLastLocation = getLastKnownLocation();
-        if (mLastLocation != null) {
-            latitude = mLastLocation.getLatitude();
-            longitude = mLastLocation.getLongitude();
-        } else {
-            //arahkan ke pusat kota tasikmalaya
-            latitude = -7.319563;
-            longitude = 108.202972;
-        }
+        qrCodeAbsensi = AbsensiGuru.qrCodeAbsensi;
+        historyQrCodeId = AbsensiGuru.historyQrCodeId;
+        hari = AbsensiGuru.hari;
+        hari_now = AbsensiGuru.hari_now;
+        Log.d("testKElasNa", idKelas + "");
+        Log.d("testKElasNa", historyQrCodeId + "");
+        Log.d("testKElasNa", idPengguna + "");
 
         initView();
         getDataSiswa();
         setClick();
-    }
-    private Location getLastKnownLocation() {
-        Location bestLocation = null;
-        try {
-            LocationManager mLocationManager;
-            mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-            List<String> providers = mLocationManager.getProviders(true);
-            for (String provider : providers) {
-                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return null;
-                }
-                Location l = mLocationManager.getLastKnownLocation(provider);
-                if (l == null) {
-                    continue;
-                }
-                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                    // Found best last known location: %s", l);
-                    bestLocation = l;
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return bestLocation;
     }
 
     private void initView() {
@@ -192,22 +160,18 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
     }
 
     private void setClick() {
-
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ivSearch.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        IntentIntegrator integrator = new IntentIntegrator(AbsensiHarianSiswa.this);
-                        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-                        integrator.setCaptureActivity(ScanQr.class);
-                        integrator.setOrientationLocked(false);
-                        integrator.setBeepEnabled(false);
-                        integrator.initiateScan();
+                if (qrCodeAbsensi.equalsIgnoreCase("")) {
+                    if (hari != hari_now) {
+                        alert("Gagal menggenerate QR-Code karena bukan jadwal yang ditentukan", "Error");
+                    } else {
+                        showDialog();
                     }
-                });
-
+                } else {
+                    showDialog();
+                }
             }
         });
 
@@ -221,7 +185,7 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                getDataSiswa();
+//                getDataSiswa();
                 refreshlayout.finishRefresh(2000);
 
             }
@@ -236,14 +200,14 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
 
     }
 
-    private void getDataSiswa() {
+    public static void getDataSiswa() {
         spinKit.setVisibility(View.VISIBLE);
         listHari.clear();
         cvAll.setVisibility(View.GONE);
         AndroidNetworking.post(AbsensiApi.POST_FIND_ABSENSI)
                 .addBodyParameter("history_qr_code_id", String.valueOf(historyQrCodeId))
                 .addBodyParameter("id_kelas", String.valueOf(idKelas))
-                .setTag(this)
+                .setTag(activity)
                 .setPriority(Priority.LOW)
                 .build()
                 .setAnalyticsListener(new AnalyticsListener() {
@@ -277,7 +241,7 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
 
                             listHari.add(x);
                         }
-                        adapterHari = new AbsensiSiswaAdapter(AbsensiHarianSiswa.this, listHari);
+                        adapterHari = new AbsensiSiswaNewAdapter(activity, listHari);
                         ivPelajaran.setAdapter(adapterHari);
 
                         JSONObject total_siswa = result.getJSONObject("total_siswa");
@@ -293,13 +257,13 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
                         tvBelumAbsen.setText(total_belum.getString("total_siswa"));
                         tvSakit.setText(total_sakit.getString("total_siswa"));
                     } else {
-                        alert(status, message);
+                        alertNew(status, message);
                     }
 
                 } catch (JSONException e) {
                     spinKit.setVisibility(View.GONE);
                     e.printStackTrace();
-                    alert("Gagal menampilkan data!", "Error");
+                    alertNew("Gagal menampilkan data!", "Error");
                 }
 
             }
@@ -307,12 +271,40 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
             @Override
             public void onError(ANError anError) {
                 spinKit.setVisibility(View.GONE);
-                alert(anError.toString(), "Error");
+                alertNew(anError.toString(), "Error");
             }
         });
     }
+    public static void alertNew(final String message, final String status) {
+        if (status.equalsIgnoreCase("succes")) {
+            SweetAlertDialog pDialog = new SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE);
+            pDialog.setTitleText("Sukses");
+            pDialog.setContentText(message);
+            pDialog.setCancelable(false);
+            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    sweetAlertDialog.dismiss();
+                }
+            });
+            pDialog.show();
+        } else {
+            SweetAlertDialog pDialog = new SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE);
+            pDialog.setTitleText("Error");
+            pDialog.setContentText(message);
+            pDialog.setCancelable(false);
+            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    sweetAlertDialog.dismiss();
+                }
+            });
+            pDialog.show();
+        }
 
-    public void alert(final String status, final String message) {
+    }
+
+    public void alert(final String message, final String status) {
         if (status.equalsIgnoreCase("succes")) {
             SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
             pDialog.setTitleText("Sukses");
@@ -341,91 +333,33 @@ public class AbsensiHarianSiswa extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
+    public void showDialog() {
+        dialogPlus = DialogPlus.newDialog(AbsensiHarianGuru.this)
+                .setContentHolder(new ViewHolder(R.layout.dialog_qr_code))
+                .setExpanded(false)
+                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)  // or any custom width ie: 300
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setInAnimation(R.anim.slide_in_bottom)
+                .setOutAnimation(R.anim.slide_out_bottom)
+                .create();
+        dialogPlus.show();
+        ivBarcode = (ImageView) dialogPlus.findViewById(R.id.iv_barcode);
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("test", "disini");
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-        if (result != null) {
-            if (result.getContents() == null) {
-                Log.d("QR Pay", "Absensi Dibatalkan");
-            } else {
-                try {
-                    result.getContents();
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            int width = ss.getWidth() - 50;
+            int height = ss.getWidth() - 50;
 
-                    prosesAbsensi(result.getContents());
-
-                } catch (Exception ex) {
-
-                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            BitMatrix bitMatrix = multiFormatWriter.encode(qrCodeAbsensi + "", BarcodeFormat.QR_CODE, width, height);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ivBarcode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
         }
     }
-
-    private void prosesAbsensi(final String qrCode) {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#3D3489"));
-        pDialog.setTitleText("Sedang Mengupdate Data....");
-        pDialog.setCancelable(false);
-        pDialog.show();
-        AndroidNetworking.post(AbsensiApi.POST_PROSES_ABSENSI)
-                .addBodyParameter("qr_code_absensi", String.valueOf(qrCode))
-                .addBodyParameter("history_qr_code_id", String.valueOf(historyQrCodeId))
-                .addBodyParameter("id_kelas", String.valueOf(idKelas))
-                .addBodyParameter("id_pengguna", String.valueOf(userid))
-                .setTag(this)
-                .setPriority(Priority.LOW)
-                .build()
-                .setAnalyticsListener(new AnalyticsListener() {
-                    @Override
-                    public void onReceived(long timeTakenInMillis, long bytesSent, long bytesReceived, boolean isFromCache) {
-
-                    }
-                }).getAsOkHttpResponseAndJSONObject(new OkHttpResponseAndJSONObjectRequestListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onResponse(Response okHttpResponse, JSONObject response) {
-                Log.d("test", "onResponse object : " + response.toString());
-                try {
-                    pDialog.dismissWithAnimation();
-                    JSONObject result = response.getJSONObject("prilude");
-                    String status = result.getString("status");
-                    String message = result.getString("message");
-
-                    if (status.equalsIgnoreCase("success")) {
-                        getDataSiswa();
-                    } else {
-                        alert(status, message);
-                    }
-
-                } catch (JSONException e) {
-                    pDialog.dismissWithAnimation();
-                    e.printStackTrace();
-                    alert("Gagal menampilkan data!", "Error");
-                }
-
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                pDialog.dismissWithAnimation();
-                alert(anError.toString(), "Error");
-            }
-        });
-    }
-
 
 
 }
