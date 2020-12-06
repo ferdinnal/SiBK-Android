@@ -1,5 +1,6 @@
 package com.sibk.tasik.MainActivitySiswa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.sibk.tasik.DB.DBUser;
 import com.sibk.tasik.Model.DashboardModel;
 import com.sibk.tasik.Model.User;
 import com.sibk.tasik.R;
+import com.sibk.tasik.Service.NotificationService;
 
 import java.util.ArrayList;
 
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainsiswa);
+
+        Intent intentService = new Intent(this, NotificationService.class);
+        startService(intentService);
 
         DBUser dbUser = new DBUser(MainActivity.this);
         userModel = dbUser.findUser();

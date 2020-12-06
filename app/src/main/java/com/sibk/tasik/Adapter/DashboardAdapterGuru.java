@@ -11,11 +11,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sibk.tasik.DB.DBUser;
-import com.sibk.tasik.MainActivityGuru.AbsensiGuru;
 import com.sibk.tasik.MainActivityGuru.AbsensiJadwalGuru;
-import com.sibk.tasik.MainActivityGuru.Jadwal;
-import com.sibk.tasik.MainActivityGuru.MainActivity;
-import com.sibk.tasik.MainActivityGuru.Profiles;
+import com.sibk.tasik.MainActivityGuru.JadwalGuru;
+import com.sibk.tasik.MainActivityGuru.MainActivityGuru;
+import com.sibk.tasik.MainActivityGuru.ProfilesGuru;
 import com.sibk.tasik.Model.DashboardModel;
 import com.sibk.tasik.R;
 import com.sibk.tasik.StartActivity.LoginActivity;
@@ -34,7 +33,7 @@ public class DashboardAdapterGuru extends RecyclerView.Adapter<DashboardAdapterG
         this.listdata = listdata;
     }
 
-    public DashboardAdapterGuru(MainActivity mainActivity, ArrayList<DashboardModel> datamenu) {
+    public DashboardAdapterGuru(MainActivityGuru mainActivity, ArrayList<DashboardModel> datamenu) {
         this.activity = mainActivity;
         this.listdata = datamenu;
     }
@@ -77,10 +76,10 @@ public class DashboardAdapterGuru extends RecyclerView.Adapter<DashboardAdapterG
                     Intent i = new Intent(activity, AbsensiJadwalGuru.class);
                     activity.startActivity(i);
                 } else if (idds == 2) {
-                    Intent i = new Intent(activity, Jadwal.class);
+                    Intent i = new Intent(activity, JadwalGuru.class);
                     activity.startActivity(i);
                 } else if (idds == 3) {
-                    Intent i = new Intent(activity, Profiles.class);
+                    Intent i = new Intent(activity, ProfilesGuru.class);
                     activity.startActivity(i);
                 }else if (idds == 4) {
                     alert("logout", "");

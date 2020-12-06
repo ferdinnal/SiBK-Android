@@ -35,7 +35,7 @@ import com.gun0912.tedpermission.TedPermission;
 import com.sibk.tasik.Api.UserApi;
 import com.sibk.tasik.Api.VersionManagementApi;
 import com.sibk.tasik.DB.DBUser;
-import com.sibk.tasik.MainActivityGuru.MainActivity;
+import com.sibk.tasik.MainActivityGuru.MainActivityGuru;
 import com.sibk.tasik.Model.User;
 import com.sibk.tasik.R;
 import com.sibk.tasik.Utility.ScreenSize;
@@ -305,7 +305,7 @@ public class LoginActivity extends AppCompatActivity implements Animation.Animat
                         DBUser dbUser = new DBUser(LoginActivity.this);
                         final Intent i;
                         if (dbUser.findUser().getusertypeid() == 2) {
-                            i = new Intent(LoginActivity.this, MainActivity.class);
+                            i = new Intent(LoginActivity.this, MainActivityGuru.class);
                             startActivity(i);
                             finish();
                         } else if (dbUser.findUser().getusertypeid() == 3) {

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="#4BAAA9A9"
-    tools:context=".MainActivityGuru.MainActivity">
+    tools:context=".MainActivityGuru.MainActivityGuru">
 
     <RelativeLayout
         android:id="@+id/rl_profile"

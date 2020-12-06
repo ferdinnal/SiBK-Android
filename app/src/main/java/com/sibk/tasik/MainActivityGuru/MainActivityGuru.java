@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -14,10 +15,12 @@ import com.sibk.tasik.DB.DBUser;
 import com.sibk.tasik.Model.DashboardModel;
 import com.sibk.tasik.Model.User;
 import com.sibk.tasik.R;
+import com.sibk.tasik.Service.NotificationService;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityGuru extends AppCompatActivity {
     RecyclerView recyclerView;
     private boolean doublePressed = false;
     private String fullname;
@@ -29,13 +32,18 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<DashboardModel> datamenu;
     GridLayoutManager gridLayoutManager;
     DashboardAdapterGuru adapter;
+    private Timer mTimer = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DBUser dbUser = new DBUser(MainActivity.this);
+        Intent intentService = new Intent(this, NotificationService.class);
+        startService(intentService);
+
+
+        DBUser dbUser = new DBUser(MainActivityGuru.this);
         userModel = dbUser.findUser();
         idPengguna = userModel.getuserid();
         idTipePengguna = userModel.getusertypeid();
@@ -63,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         datamenu.add(new DashboardModel("Profile","logo5",3));
         datamenu.add(new DashboardModel("Logout","logo6",4));
 
-        adapter = new DashboardAdapterGuru(MainActivity.this, datamenu);
+        adapter = new DashboardAdapterGuru(MainActivityGuru.this, datamenu);
         recyclerView.setAdapter(adapter);
 
     }

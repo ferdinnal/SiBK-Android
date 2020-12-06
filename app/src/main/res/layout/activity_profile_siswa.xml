@@ -127,7 +127,7 @@
                                 android:layout_marginTop="7dp"
                                 android:fontFamily="@font/montserrat_semibold"
                                 android:gravity="center"
-                                android:text="Siswa"
+                                android:text="-"
                                 android:textColor="@color/putih"
                                 android:textSize="18dp" />
 
@@ -140,7 +140,7 @@
                                 android:layout_marginBottom="15dp"
                                 android:fontFamily="@font/montserrat_semibold"
                                 android:gravity="center"
-                                android:text="X TKJ"
+                                android:text="-"
                                 android:textColor="@color/putih"
                                 android:textSize="18dp" />
                         </LinearLayout>
@@ -235,6 +235,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
                                 android:orientation="horizontal"
+                                android:id="@+id/llPhoneOrtu"
                                 android:padding="7dp">
 
                                 <ImageView
@@ -273,6 +274,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
                                 android:orientation="horizontal"
+                                android:id="@+id/llNISN"
                                 android:padding="7dp">
 
                                 <ImageView
@@ -308,6 +310,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
                                 android:orientation="horizontal"
+                                android:id="@+id/llAddress"
                                 android:padding="7dp">
 
                                 <ImageView
@@ -343,6 +346,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
                                 android:orientation="horizontal"
+                                android:id="@+id/llPoint"
                                 android:padding="7dp">
 
                                 <ImageView

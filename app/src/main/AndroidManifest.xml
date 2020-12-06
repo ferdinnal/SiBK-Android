@@ -25,10 +25,10 @@
         android:name=".Utility.MyApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/sukaresik"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/sukaresik"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
@@ -46,9 +46,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".Service.NotificationService"
+            android:exported="false" />
 
         <activity
-            android:name=".MainActivityGuru.MainActivity"
+            android:name=".MainActivityGuru.MainActivityGuru"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -91,7 +94,13 @@
             android:name=".MainActivityGuru.AbsensiJadwalGuru"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".MainActivityGuru.JadwalGuru"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MainActivityGuru.AbsensiGuru"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivityGuru.ProfilesGuru"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivityGuru.AbsensiHarianGuru"

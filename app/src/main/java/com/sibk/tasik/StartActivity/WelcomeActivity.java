@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sibk.tasik.MainActivityGuru.MainActivity;
+import com.sibk.tasik.MainActivityGuru.MainActivityGuru;
 import com.sibk.tasik.R;
 import com.sibk.tasik.Utility.ScreenSize;
 
@@ -56,7 +56,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final Intent i;
                 if (usertypeid == 2) {
-                    i = new Intent(WelcomeActivity.this, MainActivity.class);
+                    i = new Intent(WelcomeActivity.this, MainActivityGuru.class);
                     startActivity(i);
                     finish();
                 } else if (usertypeid == 3) {
