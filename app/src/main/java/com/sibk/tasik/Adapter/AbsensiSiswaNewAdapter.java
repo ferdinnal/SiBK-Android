@@ -229,7 +229,7 @@ public class AbsensiSiswaNewAdapter extends BaseAdapter {
 //        });
 //    }
 
-    public void alert(final String status, final String message) {
+    public void alert(final String message, final String status) {
         if (status.equalsIgnoreCase("succes")) {
             SweetAlertDialog pDialog = new SweetAlertDialog(act, SweetAlertDialog.SUCCESS_TYPE);
             pDialog.setTitleText("Sukses");

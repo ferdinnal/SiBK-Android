@@ -279,7 +279,7 @@ public class AbsensiGuru extends AppCompatActivity {
                         adapterHari = new AbsensiHariNewAdapter(AbsensiGuru.this, listHari);
                         ivPelajaran.setAdapter(adapterHari);
                     } else {
-                        alert(status, message);
+                        alert(status, "Mohon maaf absensi belum di temukan, silahkan generate qr-code sesuai hari dalam jadwal pelajaran.");
                     }
 
                 } catch (JSONException e) {

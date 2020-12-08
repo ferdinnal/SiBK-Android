@@ -155,7 +155,7 @@ public class AbsensiJadwalGuru extends AppCompatActivity {
                         adapterPelajaran = new PelajaranAbsensiGuruAdapter(AbsensiJadwalGuru.this, listPelajaran);
                         ivPelajaran.setAdapter(adapterPelajaran);
                     } else {
-                        alert(status, message);
+//                        alert(status, message);
                     }
 
                 } catch (JSONException e) {

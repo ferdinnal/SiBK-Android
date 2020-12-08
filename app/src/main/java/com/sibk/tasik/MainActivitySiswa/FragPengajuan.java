@@ -161,7 +161,8 @@ public class FragPengajuan extends Fragment {
                         ivPelajaran.setAdapter(adapterHari);
 
                     } else {
-                        alert(status, message);
+//                        alert(status, message);
+                        alert("Anda belum mempunyai data!", "Error");
                     }
 
                 } catch (JSONException e) {

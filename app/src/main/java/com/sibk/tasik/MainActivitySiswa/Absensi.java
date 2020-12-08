@@ -220,7 +220,7 @@ public class Absensi extends AppCompatActivity {
                         adapterHari = new AbsensiHariAdapter(Absensi.this, listHari);
                         ivPelajaran.setAdapter(adapterHari);
                     } else {
-                        alert(status, message);
+                        alert(status, "Mohon maaf absensi belum di temukan, silahkan kembali lagi sesuai hari dalam jadwal pelajaran.");
                     }
 
                 } catch (JSONException e) {
